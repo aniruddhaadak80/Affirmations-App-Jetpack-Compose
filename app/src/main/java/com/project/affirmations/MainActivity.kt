@@ -32,7 +32,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AffirmationsTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
 
+                }
             }
         }
     }
@@ -62,15 +67,15 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
     Card(modifier = modifier) {
         Column {
             Image(
-                painter = painterResource(affirmation.imageResourceId),
-                contentDescription = stringResource(affirmation.stringResourceId),
+                painter = painterResource(R.drawable.image1),
+                contentDescription = stringResource(R.string.affirmation1),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(194.dp),
                 contentScale = ContentScale.Crop
             )
             Text(
-                text = LocalContext.current.getString(affirmation.stringResourceId),
+                text = LocalContext.current.getString(R.string.affirmation1),
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.headlineSmall
             )
