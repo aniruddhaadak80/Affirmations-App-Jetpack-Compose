@@ -48,6 +48,9 @@ We are excited to have you contribute! Here’s a step-by-step guide to help you
 7. **Wait for Review**  
    One of the maintainers will review your changes and provide feedback if necessary.
 
+## For detailed contribution guidelines, please refer to our [CONTRIBUTING.md](CONTRIBUTING.md).
+
+
 ## Need Help?
 
 If you're stuck or need guidance, feel free to open an issue, and we'll be happy to assist you. Remember, there are no silly questions!
