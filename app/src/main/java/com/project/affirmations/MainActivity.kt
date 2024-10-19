@@ -12,6 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import android.content.Intent
+import android.widget.Toast
+import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Dispatchers
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,6 +30,9 @@ import androidx.compose.ui.unit.dp
 import com.project.affirmations.data.Datasource
 import com.project.affirmations.model.Affirmation
 import com.project.affirmations.ui.theme.AffirmationsTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.ui.Modifier
+import androidx.activity.compose.rememberLauncherForActivityResult
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
