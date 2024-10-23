@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.project.affirmations.data.Datasource
@@ -59,7 +60,7 @@ fun AffirmationList(affirmationList: List<Affirmation>, modifier: Modifier = Mod
         items(affirmationList) { affirmation ->
             AffirmationCard(
                 affirmation = affirmation,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(12.dp, 8.dp)
             )
         }
     }
@@ -80,16 +81,15 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
             Text(
                 text = stringResource(id = affirmation.stringResourceId),
                 modifier = Modifier.padding(top = 16.dp , bottom = 8.dp , start = 16.dp , end = 16.dp),
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.titleMedium
             )
             Text(
                 text = "~ "+stringResource(id = affirmation.authorResourceId),
-                fontSize = 15.sp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth(Alignment.End)
                     .padding(8.dp),
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.titleSmall,
             )
 
 
@@ -101,7 +101,7 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun AffirmationCardPreview() {
-    AffirmationCard(Affirmation(R.string.affirmation1, R.drawable.image1))
+    AffirmationCard(Affirmation(R.string.affirmation1, R.drawable.image1, R.string.author1))
 }
 
 @Preview(showBackground = true)
