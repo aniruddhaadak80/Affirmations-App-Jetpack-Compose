@@ -11,4 +11,16 @@
     <string name="affirmation8">Do not let what you cannot do interfere with what you can do.</string>
     <string name="affirmation9">The only limit to our realization of tomorrow is our doubts of today.</string>
     <string name="affirmation10">Start where you are. Use what you have. Do what you can.</string>
+
+    <string name="author1">Bhagavad Gita</string>
+    <string name="author2">Bhagavad Gita</string>
+    <string name="author3">Marcus Aurelius</string>
+    <string name="author4">Albert Schweitzer</string>
+    <string name="author5">Wayne Dyer</string>
+    <string name="author6">Buddha</string>
+    <string name="author7">C.S. Lewis</string>
+    <string name="author8">John Wooden</string>
+    <string name="author9">Franklin D. Roosevelt</string>
+    <string name="author10">Arthur Ashe</string>
+
 </resources>
