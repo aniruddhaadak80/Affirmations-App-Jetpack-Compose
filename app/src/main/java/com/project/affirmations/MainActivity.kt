@@ -52,23 +52,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = "list") {
-                        composable("list") {
-                            AffirmationsApp(navController)
-                        }
-                        composable("details/{quote}/{author}/{imageId}") { backStackEntry ->
-                            val quote = backStackEntry.arguments?.getString("quote")?.toIntOrNull() ?: 0
-                            val author = backStackEntry.arguments?.getString("author")?.toIntOrNull() ?: 0
-                            val imageId = backStackEntry.arguments?.getString("imageId")?.toIntOrNull() ?: 0
-                            AffirmationDetailScreen(
-                                navController = navController,
-                                quoteId = quote,
-                                authorId = author,
-                                imageId = imageId
-                            )
-                        }
-                    }
+                    AffirmationsApp()
                 }
             }
         }
@@ -76,21 +60,37 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AffirmationsApp(navController: NavController) {
-    Scaffold(
-        topBar = {
-            TopAppBar(navController = navController, showBackButton = false)
-        },
-        content = { paddingValues ->
-            AffirmationList(
-                affirmationList = Datasource().loadAffirmations(),
-                onClick = { affirmation ->
-                    navController.navigate("details/${affirmation.stringResourceId}/${affirmation.authorResourceId}/${affirmation.imageResourceId}")
+fun AffirmationsApp() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "list") {
+        composable("list") {
+            Scaffold(
+                topBar = {
+                    TopAppBar(navController = navController, showBackButton = false)
                 },
-                modifier = Modifier.padding(paddingValues)
+                content = { paddingValues ->
+                    AffirmationList(
+                        affirmationList = Datasource().loadAffirmations(),
+                        onClick = { affirmation ->
+                            navController.navigate("details/${affirmation.stringResourceId}/${affirmation.authorResourceId}/${affirmation.imageResourceId}")
+                        },
+                        modifier = Modifier.padding(paddingValues)
+                    )
+                }
             )
         }
-    )
+        composable("details/{quote}/{author}/{imageId}") { backStackEntry ->
+            val quote = backStackEntry.arguments?.getString("quote")?.toIntOrNull() ?: 0
+            val author = backStackEntry.arguments?.getString("author")?.toIntOrNull() ?: 0
+            val imageId = backStackEntry.arguments?.getString("imageId")?.toIntOrNull() ?: 0
+            AffirmationDetailScreen(
+                navController = navController,
+                quoteId = quote,
+                authorId = author,
+                imageId = imageId
+            )
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -209,6 +209,5 @@ private fun AffirmationCardPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun AffirmationAppPreview() {
-    val navController = rememberNavController()
-    AffirmationsApp(navController = navController)
+    AffirmationsApp()
 }
