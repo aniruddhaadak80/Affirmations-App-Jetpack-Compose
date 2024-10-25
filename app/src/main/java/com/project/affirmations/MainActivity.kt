@@ -13,13 +13,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -52,7 +61,12 @@ class MainActivity : ComponentActivity() {
                             val quote = backStackEntry.arguments?.getString("quote")?.toIntOrNull() ?: 0
                             val author = backStackEntry.arguments?.getString("author")?.toIntOrNull() ?: 0
                             val imageId = backStackEntry.arguments?.getString("imageId")?.toIntOrNull() ?: 0
-                            AffirmationDetailScreen(quoteId = quote, authorId = author, imageId = imageId)
+                            AffirmationDetailScreen(
+                                navController = navController,
+                                quoteId = quote,
+                                authorId = author,
+                                imageId = imageId
+                            )
                         }
                     }
                 }
@@ -63,15 +77,49 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AffirmationsApp(navController: NavController) {
-    AffirmationList(
-        affirmationList = Datasource().loadAffirmations(),
-        onClick = { affirmation ->
-            navController.navigate("details/${affirmation.stringResourceId}/${affirmation.authorResourceId}/${affirmation.imageResourceId}")
+    Scaffold(
+        topBar = {
+            TopAppBar(navController = navController, showBackButton = false)
+        },
+        content = { paddingValues ->
+            AffirmationList(
+                affirmationList = Datasource().loadAffirmations(),
+                onClick = { affirmation ->
+                    navController.navigate("details/${affirmation.stringResourceId}/${affirmation.authorResourceId}/${affirmation.imageResourceId}")
+                },
+                modifier = Modifier.padding(paddingValues)
+            )
         }
     )
 }
 
-
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopAppBar(navController: NavController, showBackButton: Boolean) {
+    CenterAlignedTopAppBar(
+        title = {
+            Text(
+                text = "Affirmations",
+                style = MaterialTheme.typography.titleLarge,
+                color = Color.White
+            )
+        },
+        navigationIcon = {
+            if (showBackButton) {
+                IconButton(onClick = { navController.popBackStack() }) { // Botão de voltar
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.White
+                    )
+                }
+            }
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary
+        )
+    )
+}
 
 @Composable
 fun AffirmationList(affirmationList: List<Affirmation>, onClick: (Affirmation) -> Unit, modifier: Modifier = Modifier) {
@@ -117,32 +165,39 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun AffirmationDetailScreen(quoteId: Int, authorId: Int, imageId: Int) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            painter = painterResource(id = imageId),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp),
-            contentScale = ContentScale.Crop
-        )
-        Text(
-            text = stringResource(id = quoteId),
-            fontSize = 24.sp,
-            modifier = Modifier.padding(top = 16.dp)
-        )
-        Text(
-            text = "~ "+stringResource(id = authorId),
-            fontSize = 18.sp,
-            modifier = Modifier.padding(top = 8.dp)
-        )
-    }
+fun AffirmationDetailScreen(navController: NavController, quoteId: Int, authorId: Int, imageId: Int) {
+    Scaffold(
+        topBar = {
+            TopAppBar(navController = navController, showBackButton = true)
+        },
+        content = { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(id = imageId),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp),
+                    contentScale = ContentScale.Crop
+                )
+                Text(
+                    text = stringResource(id = quoteId),
+                    fontSize = 24.sp,
+                    modifier = Modifier.padding(top = 16.dp, start = 8.dp)
+                )
+                Text(
+                    text = "~ "+stringResource(id = authorId),
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+        }
+    )
 }
 
 @Preview
