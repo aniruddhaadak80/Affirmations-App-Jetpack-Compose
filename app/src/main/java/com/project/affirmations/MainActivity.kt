@@ -3,44 +3,24 @@ package com.project.affirmations
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Card
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.project.affirmations.data.Datasource
 import com.project.affirmations.model.Affirmation
+import com.project.affirmations.ui.screen.AffirmationCard
+import com.project.affirmations.ui.screen.AffirmationDetailScreen
+import com.project.affirmations.ui.screen.AffirmationList
+import com.project.affirmations.ui.screen.TopAppBar
 import com.project.affirmations.ui.theme.AffirmationsTheme
 
 class MainActivity : ComponentActivity() {
@@ -89,113 +69,6 @@ fun AffirmationsApp(navController: NavController) {
                 },
                 modifier = Modifier.padding(paddingValues)
             )
-        }
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopAppBar(navController: NavController, showBackButton: Boolean) {
-    CenterAlignedTopAppBar(
-        title = {
-            Text(
-                text = "Affirmations",
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.White
-            )
-        },
-        navigationIcon = {
-            if (showBackButton) {
-                IconButton(onClick = { navController.popBackStack() }) { // Botão de voltar
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.White
-                    )
-                }
-            }
-        },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary
-        )
-    )
-}
-
-@Composable
-fun AffirmationList(affirmationList: List<Affirmation>, onClick: (Affirmation) -> Unit, modifier: Modifier = Modifier) {
-    LazyColumn(modifier = modifier) {
-        items(affirmationList) { affirmation ->
-            AffirmationCard(
-                affirmation = affirmation,
-                modifier = Modifier
-                    .padding(12.dp, 8.dp)
-                    .clickable { onClick(affirmation) }
-            )
-        }
-    }
-}
-@Composable
-fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
-    Card(modifier = modifier) {
-        Column {
-            Image(
-                painter = painterResource(id = affirmation.imageResourceId),
-                contentDescription = stringResource(id = affirmation.stringResourceId),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(194.dp),
-                contentScale = ContentScale.Crop
-            )
-            // Use affirmation's stringResourceId for the text
-            Text(
-                text = stringResource(id = affirmation.stringResourceId),
-                modifier = Modifier.padding(top = 16.dp , bottom = 8.dp , start = 16.dp , end = 16.dp),
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = "~ "+stringResource(id = affirmation.authorResourceId),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentWidth(Alignment.End)
-                    .padding(8.dp),
-                style = MaterialTheme.typography.titleSmall,
-            )
-        }
-    }
-}
-
-@Composable
-fun AffirmationDetailScreen(navController: NavController, quoteId: Int, authorId: Int, imageId: Int) {
-    Scaffold(
-        topBar = {
-            TopAppBar(navController = navController, showBackButton = true)
-        },
-        content = { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = imageId),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp),
-                    contentScale = ContentScale.Crop
-                )
-                Text(
-                    text = stringResource(id = quoteId),
-                    fontSize = 24.sp,
-                    modifier = Modifier.padding(top = 16.dp, start = 8.dp)
-                )
-                Text(
-                    text = "~ "+stringResource(id = authorId),
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-            }
         }
     )
 }
