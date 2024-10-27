@@ -2,6 +2,7 @@ package com.project.affirmations.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,14 +28,20 @@ fun AffirmationDetailScreen(navController: NavController, quoteId: Int, authorId
                     .padding(paddingValues),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = painterResource(id = imageId),
-                    contentDescription = null,
+                Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(300.dp),
-                    contentScale = ContentScale.Crop
-                )
+                        .padding(16.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = imageId),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(300.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
                 Text(
                     text = stringResource(id = quoteId),
                     fontSize = 24.sp,
