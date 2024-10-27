@@ -10,6 +10,11 @@ Hacktoberfest is an annual event where developers from all over the world contri
 
 This project is built using **Android Studio** with **Jetpack Compose** and is aimed at making it easier for developers to create clean and intuitive Android UI. Contributions can range from fixing issues, adding new features, or improving the existing code.
 
+### Screenshots
+| Home Screen                  | Detail Screen    |
+|-----------------------|---------------------------|
+| ![Home Screen](https://github.com/user-attachments/assets/fc730e9f-7744-4578-8451-3721503a0b90) | ![Detail Screen](https://github.com/user-attachments/assets/514ebb34-7cb5-45f8-aee8-fee64ffb76a6) |
+
 ## How to Contribute
 
 We are excited to have you contribute! Here’s a step-by-step guide to help you get started:
